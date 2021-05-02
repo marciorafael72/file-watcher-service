@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.10.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'file-watcher'
+version '1.0-SNAPSHOT'
+
+group = 'br.com.marciorafael'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.2.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'commons-io:commons-io:2.5'
+    compile('org.springframework.amqp:spring-rabbit')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+test {
+    useJUnitPlatform()
+}

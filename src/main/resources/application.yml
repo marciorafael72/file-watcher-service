@@ -1,0 +1,23 @@
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+amqp:
+  file-received:
+    queue: file-received.queue
+    exchange: file-received.exchange
+    routing-key: file-received.routing.key
+    concurrency: 2
+
+app:
+  files:
+    directory:
+      in: /data/in
+      out: /data/out
+    extension:
+      start: .dat
+      done: .done.dat

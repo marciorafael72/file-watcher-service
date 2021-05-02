@@ -1,0 +1,42 @@
+version: '2.1'
+services:
+  watcher:
+    build: .
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: /
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+    links:
+      - rabbitmq:rabbitmq
+    volumes:
+      - type: bind
+        source: /Users/marciorafael/data/in
+        target: /root/data/in
+      - type: bind
+        source: /Users/marciorafael/data/out
+        target: /root/data/out
+  worker:
+    build: .
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: /
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      SPRING_PROFILES_ACTIVE: WORKER
+    links:
+      - rabbitmq:rabbitmq
+    volumes:
+      - type: bind
+        source: /Users/marciorafael/data/in
+        target: /root/data/in
+      - type: bind
+        source: /Users/marciorafael/data/out
+        target: /root/data/out
+  rabbitmq:
+    image: rabbitmq:3.6-management
+    ports:
+      - 5672:5672
+      - 15672:15672
